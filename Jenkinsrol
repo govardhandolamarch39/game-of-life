@@ -12,8 +12,11 @@ pipeline {
             }
         }       
         stage('package') {
+            tools {
+                jdk 'JDK_8_UBUNTU'
+            }
             steps {
-                sh 'mvn package'
+                sh "mvn ${params.MAVEN_GOAL}"
             }
         }
         stage{'copy build'} {
