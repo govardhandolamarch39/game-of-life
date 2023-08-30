@@ -10,6 +10,7 @@ pipeline {
                 git url: 'https://github.com/govardhandolamarch39/game-of-life.git',
                     branch: 'declarative'
             }
+        }       
         stage('package') {
             steps {
                 sh 'mvn package'
@@ -17,13 +18,13 @@ pipeline {
         }
         stage{'copy build'} {
             steps {
-                sh "mkdir -p /tmp/&JOB_NAME/${BUILD_ID} && cp ./gameoflife-web/target/gameoflife.war /tmp/$JOB_NAME/${BUILD_ID}/"
+                sh 'mkdir -p /tmp/&JOB_NAME/${BUILD_ID} && cp ./gameoflife-web/target/gameoflife.war /tmp/$JOB_NAME/${BUILD_ID}/'
 
         stage('post build') {
             steps {
-                archiveArtifacts artifacts: '**/target/gameoflife.war',
+                archiveArtifacts artifacts: '**/target/gameoflife.war'
                                  onlyIfSuccessful: true
-                junit testResults: '**/surefire-reports/TEST-*.xml',
+                junit testResults: '**/surefire-reports/TEST-*.xml'
             }
         }
     }
